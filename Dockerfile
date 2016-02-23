@@ -1,4 +1,4 @@
-FROM hypriot/rpi-alpine-scratch:v3.2
+FROM armhf/alpine:3.3
 MAINTAINER jp@roemer.im, raxetul@gmail.com
 
 # Install system utils & Gogs runtime dependencies
