@@ -1,10 +1,10 @@
-FROM armhf/alpine:3.3
-MAINTAINER jp@roemer.im, raxetul@gmail.com
+FROM armhf/alpine
+MAINTAINER jp@roemer.im
 
-# Install system utils & Gogs runtime dependencies
-ADD https://github.com/tianon/gosu/releases/download/1.6/gosu-armhf /usr/sbin/gosu
+# Install system utils & Gogs runtime dependencies
+ADD https://github.com/tianon/gosu/releases/download/1.9/gosu-amd64 /usr/sbin/gosu
 RUN chmod +x /usr/sbin/gosu \
- && apk --no-cache --no-progress add ca-certificates bash git linux-pam s6 curl openssh socat
+ && apk --no-cache --no-progress add ca-certificates bash git linux-pam s6 curl openssh socat tzdata
 
 ENV GOGS_CUSTOM /data/gogs
 
@@ -12,10 +12,10 @@ COPY . /app/gogs/
 WORKDIR /app/gogs/
 RUN ./docker/build.sh
 
-# Configure LibC Name Service
+# Configure LibC Name Service
 COPY docker/nsswitch.conf /etc/nsswitch.conf
 
-# Configure Docker Container
+# Configure Docker Container
 VOLUME ["/data"]
 EXPOSE 22 3000
 ENTRYPOINT ["docker/start.sh"]
